@@ -96,152 +96,154 @@
     //实际上它的内部应该是这样实现的：为了简化函数及方便理解，而split是作为一个属性存在于String这个对象里，
     //这里咱只是把要切成数组的字符串当参数传进来，为了方便直观我就不封在数组对象里了，一样的其实
     //另外呢，由于我也没看过底层源码是怎样的，实际上肯定有更高级巧妙的方式，特别这个while()函数最好少用，不过整体思路应该差不多，下同
-    // let Split = function(string,str){
-    //   let rule = new RegExp(str),
-    //       accept = [], //
-    //       str0 = string; //为了不影响原字符串，缓存一下
-    //   //这里的切取一般得是用C/C++的for循环一个个字符去遍历,这里直接用了slice，只是大致看看里面是怎么走的
-    //   while(1){
-    //     if(rule.test(str0) && str !== ''){
-    //       accept.push(str0.slice(0,str0.indexOf(str)));
-    //       str0 = str0.slice((str0.indexOf(str)+str.length),str0.length);
-    //     }
-    //     else {
-    //       if(str === '' ) {
-    //         for(let i = 0; i < str0.length; i ++ ){
-    //           accept.push(str0[i]);
-    //         }
-    //         break;
-    //       }
-    //       else{
-    //         accept.push(str0);break;
-    //       }
-    //     }
-    //   }
-    //   return accept;
-    // }
-    // console.log(Split(str0,''));
-    // console.log(str0.split(''));
+    let Split = function(string,str){
+      let rule = new RegExp(str),
+          accept = [], //
+          str0 = string; //为了不影响原字符串，缓存一下
+      //这里的切取一般得是用C/C++的for循环一个个字符去遍历,这里直接用了slice，只是大致看看里面是怎么走的
+      while(1){
+        if(rule.test(str0) && str !== ''){
+          accept.push(str0.slice(0,str0.indexOf(str)));
+          str0 = str0.slice((str0.indexOf(str)+str.length),str0.length);
+        }
+        else {
+          if(str === '' ) {
+            for(let i = 0; i < str0.length; i ++ ){
+              accept.push(str0[i]);
+            }
+            break;
+          }
+          else{
+            accept.push(str0);break;
+          }
+        }
+      }
+      return accept;
+    }
+    console.log(Split(str0,''));
+    console.log(str0.split(''));
 
 
     //3、函数reverse内部实现，实际上应该是有更好的办法的，这里我们了解下原理即可
-    // let Reverse = function(arr){
-    //   let accept = [];
-    //   for(let i = 0;i < arr.length;i++){
-    //     accept[i] = arr[arr.length-1-i];
-    //   }
-    //   return accept;
-    // }
-    // console.log(Reverse(arr2));
-    // console.log(arr2.reverse());
+    let Reverse = function(arr){
+      let accept = [];
+      for(let i = 0;i < arr.length;i++){
+        accept[i] = arr[arr.length-1-i];
+      }
+      return accept;
+    }
+    console.log(Reverse(arr2));
+    console.log(arr2.reverse());
 
 
     //4、slice函数内部实现：为了方便直观我就不封在数组或字符串对象里了，一样的其实
-    // let Slice = function(start,end,val){
-    //   if(typeof(val) === "string"){
-    //     let accept = '';
-    //     for(let i = start;i < (end > val.length ? val.length : end ); i++){
-    //       accept += val[i];
-    //     }
-    //   }
-    //   else {
-    //     let j = 0,accept = [];
-    //     for(let i = start;i < (end > val.length ? val.length : end ); i++){
-    //       accept[j] = val[i];
-    //       j++;
-    //     }
-    //   }
-    //   return accept;
-    // }
-    // console.log(Slice(3, 100, str2));
-    // console.log(str2.slice(3, 100))
-    // console.log(Slice(2, 8, arr2))
-    // console.log(arr2.slice(2, 8));
+    let Slice = function(start,end,val){
+        let accept;
+        if(typeof(val) === "string"){
+            accept = '';
+            for(let i = start;i < (end > val.length ? val.length : end ); i++){
+              accept += val[i];
+            }
+        }
+        else {
+            let j = 0;
+            accept = [];
+            for(let i = start;i < (end > val.length ? val.length : end ); i++){
+              accept[j] = val[i];
+              j++;
+            }
+        }
+        return accept;
+    }
+    console.log(Slice(3, 100, str2));
+    console.log(str2.slice(3, 100));
+    console.log(Slice(2, 8, arr2))
+    console.log(arr2.slice(2, 8));
 
 
     //6、sort方法实现：为了方便直观我就不封在数组对象里了，一样的其实，从它的实际应用来看应该内部逻辑很复杂，为了简化，我们
     //只考虑了纯数字的排序，也不考虑用函数作为参数来传参，咱考虑正序和逆序即可
     //注意！注意！注意！这里的排序只对数字有效
-    // let Sort = function(arr,order){ //order只有StoL和LtoS，StoL代表正序（小-大），LtoS代表倒序（大-小）
-    //     let accept = arr,mid;
-    //   if(accept.length > 1){
-    //       for(let i = 1; i < accept.length; i ++ ){
-    //         for(let j = 0; j < i; j ++ ){
-    //           if((accept[i] < accept[j] && order === 'StoL') || (accept[i] > accept[j] && order === 'LtoS')){ //满足条件则交换位置
-    //             mid = accept[i]; //这里如果是纯number类型的，可以不用新增寄存器（变量mid）
-    //             accept[i] = accept[j];
-    //             accept[j] = mid; // mid中间值
-    //           }
-    //         }
-    //       }
-    //     }
-    //     return accept;
-    // }
+    let Sort = function(arr,order){ //order只有StoL和LtoS，StoL代表正序（小-大），LtoS代表倒序（大-小）
+        let accept = arr,mid;
+      if(accept.length > 1){
+          for(let i = 1; i < accept.length; i ++ ){
+            for(let j = 0; j < i; j ++ ){
+              if((accept[i] < accept[j] && order === 'StoL') || (accept[i] > accept[j] && order === 'LtoS')){ //满足条件则交换位置
+                mid = accept[i]; //这里如果是纯number类型的，可以不用新增寄存器（变量mid）
+                accept[i] = accept[j];
+                accept[j] = mid; // mid中间值
+              }
+            }
+          }
+        }
+        return accept;
+    }
     // //基本sort排序
-    // let sortTest = [1,25,10,7,100,2560,13,-3281,-23,0];
-    // console.log(Sort(sortTest,'LtoS'));
+    let sortTest = [1,25,10,7,100,2560,13,-3281,-23,0];
+    console.log(Sort(sortTest,'LtoS'));
 
 
     //7、concat方法实现：为了方便直观我就不封在数组对象里了，一样的其实
-    // let Concat = function(){
-    //     let accept = [];
-    //     for(let i = 0; i < arguments.length; i ++){
-    //        if(typeof (arguments[i]) !== "string"){
-    //          for(let j = 0; j < arguments[i].length; j++){
-    //            accept.push(arguments[i][j]);
-    //          }
-    //        }
-    //        else {
-    //          accept.push(arguments[i]);
-    //        }
-    //     }
-    //     return accept;
-    // }
-    // console.log(Concat(arr6, 'dasoai','dsaoidha','我去你妹的')); //两者输出结果一致
-    // console.log(arr6.concat('dasoai','dsaoidha','我去你妹的')); //["my", "name", "is", "dorsey!", "dasoai", "dsaoidha", "我去你妹的"]
+    let Concat = function(){
+        let accept = [];
+        for(let i = 0; i < arguments.length; i ++){
+           if(typeof (arguments[i]) !== "string"){
+             for(let j = 0; j < arguments[i].length; j++){
+               accept.push(arguments[i][j]);
+             }
+           }
+           else {
+             accept.push(arguments[i]);
+           }
+        }
+        return accept;
+    }
+    console.log(Concat(arr6, 'dasoai','dsaoidha','我去你妹的')); //两者输出结果一致
+    console.log(arr6.concat('dasoai','dsaoidha','我去你妹的')); //["my", "name", "is", "dorsey!", "dasoai", "dsaoidha", "我去你妹的"]
 
 
     //8、shift方法实现 ：删除数组第一个元素
-    // let Shift = function(arr){
-    //   let firstVal = arr[0];
-    //     for(let i = 0; i < arr.length-1; i++){
-    //       arr[i] = arr[i + 1];
-    //     }
-    //     arr.length -=1;
-    //     return firstVal;
-    // }
-    // let shiftTest = [1,25,10,7,100,2560,13,-3281,-23,0];
-    // console.log(Shift(shiftTest)); //返回第一个元素
-    // console.log(shiftTest); //删除了第一个元素的数组
+    let Shift = function(arr){
+      let firstVal = arr[0];
+        for(let i = 0; i < arr.length-1; i++){
+          arr[i] = arr[i + 1];
+        }
+        arr.length -=1;
+        return firstVal;
+    }
+    let shiftTest = [1,25,10,7,100,2560,13,-3281,-23,0];
+    console.log(Shift(shiftTest)); //返回第一个元素
+    console.log(shiftTest); //删除了第一个元素的数组
 
 
     //9、unshift方法实现 ： 将参数添加到数组开头
-    // let Unshift = function(arr){
-    //   arr.length += arguments.length-1;
-    //   for(let i = arr.length;i > arguments.length-1; i --){
-    //     arr[i-1] = arr[i-arguments.length];
-    //   }
-    //   for(let i = 0 ; i < arguments.length-1 ; i ++){
-    //     arr[i] = arguments[i+1];
-    //   }
-    //   return arr.length;
-    // }
-    // let unshiftTest = [1,25,10,7,100,2560,13,-3281,-23,0];
-    // console.log(Unshift(unshiftTest,"hello","world")); //返回新数组长度12
-    // console.log(unshiftTest); //返回新数组
+    let Unshift = function(arr){
+      arr.length += arguments.length-1;
+      for(let i = arr.length;i > arguments.length-1; i --){
+        arr[i-1] = arr[i-arguments.length];
+      }
+      for(let i = 0 ; i < arguments.length-1 ; i ++){
+        arr[i] = arguments[i+1];
+      }
+      return arr.length;
+    }
+    let unshiftTest = [1,25,10,7,100,2560,13,-3281,-23,0];
+    console.log(Unshift(unshiftTest,"hello","world")); //返回新数组长度12
+    console.log(unshiftTest); //返回新数组
 
 
     //10、push方法实现 ： 将参数添加到数组末尾，与unshift的原理实质上是一致的
-    // let Push = function(arr){
-    //   arr.length += arguments.length - 1;
-    //   for(let i = 1; i < arguments.length ; i ++){
-    //       arr[arr.length - arguments.length + i] = arguments[i];
-    //   }
-    //   return arr.length;
-    // }
-    // let pushTest = [1,25,10,7,100,2560,13,-3281,-23,0];
-    // console.log(Push(pushTest,"hello","world")); //返回新数组长度12
-    // console.log(pushTest); //返回新数组
+    let Push = function(arr){
+      arr.length += arguments.length - 1;
+      for(let i = 1; i < arguments.length ; i ++){
+          arr[arr.length - arguments.length + i] = arguments[i];
+      }
+      return arr.length;
+    }
+    let pushTest = [1,25,10,7,100,2560,13,-3281,-23,0];
+    console.log(Push(pushTest,"hello","world")); //返回新数组长度12
+    console.log(pushTest); //返回新数组
 </script>
 </body>
 </html>
