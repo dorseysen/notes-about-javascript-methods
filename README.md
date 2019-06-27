@@ -1,3 +1,5 @@
+<link href="markdown.css" rel="stylesheet"></link>
+
 # notes-about-javascript-methods
 - original javascript methods notes，with much annotation  writed by myself
 
