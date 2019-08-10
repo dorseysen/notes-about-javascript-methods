@@ -1,3 +1,5 @@
 import * as App from './js';
 
-new App.Base();
+window.App = App;
+
+Object.keys(App).forEach(item => new App[item]());

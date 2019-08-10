@@ -1,6 +1,7 @@
 export * from './ECMAScript';
 
-// export const Init = function () {
+export * from './BOM';
 
-//     new ECMAScript.Base();
-// }
+export * from './DOM';
+
+export * from './Others';

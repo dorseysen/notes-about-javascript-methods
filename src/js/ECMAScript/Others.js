@@ -1,11 +1,11 @@
-export class Base{
+export class _Others{
 
     constructor () {
 
-        this.dataType();
-        this.scope();
-    }
+        this.task = Object.getOwnPropertyNames(_Others.prototype).filter(item => item !== 'constructor');
 
+        this.task.forEach(item => this[item]());
+    }
     //  data type
 
     dataType () {
@@ -32,7 +32,9 @@ export class Base{
             }
         } );
     }
+
     //  action scope
+    
     scope () {
 
         var a = 1;
